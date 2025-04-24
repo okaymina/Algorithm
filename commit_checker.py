@@ -28,3 +28,7 @@ if __name__ == "__main__":
     problems = extract_programmers_problems_from_commits()
     print("✅ 푼 문제 리스트:")
     print(json.dumps(problems, ensure_ascii=False, indent=2))
+
+# 푼 문제 리스트 저장
+with open("solved_problems.json", "w", encoding="utf-8") as f:
+    json.dump(problems, f, ensure_ascii=False, indent=2)
