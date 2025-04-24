@@ -45,6 +45,11 @@ def recommend_unsolved_problem():
 
     unsolved = [p for p in all_problems if normalize(p['title']) not in solved]
 
+    # log
+    print(f"🔍 총 문제 수: {len(all_problems)}")
+    print(f"✅ 푼 문제 수: {len(solved)}")
+    print(f"❓ 추천 가능한 미풀이 수: {len(unsolved)}")
+
     if not unsolved:
         return "모든 문제를 다 푼 것 같아요! 🎉"
 
@@ -54,8 +59,3 @@ def recommend_unsolved_problem():
 # 테스트 실행
 if __name__ == "__main__":
     print(recommend_unsolved_problem())
-
-# log
-print(f"🔍 총 문제 수: {len(all_problems)}")
-print(f"✅ 푼 문제 수: {len(solved)}")
-print(f"❓ 추천 가능한 미풀이 수: {len(unsolved)}")
