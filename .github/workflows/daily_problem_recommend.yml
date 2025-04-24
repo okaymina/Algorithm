@@ -1,0 +1,37 @@
+name: Daily Problem Recommender
+
+on:
+  schedule:
+    - cron: '5 0 * * *' # 한국시간 09:05
+  workflow_dispatch:
+
+jobs:
+  recommend-problem:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install beautifulsoup4 requests
+
+      - name: Run recommender script
+        id: run_recommender
+        run: |
+          echo "RECOMMENDED=$(python problem_recommender.py)" >> $GITHUB_ENV
+
+      - name: Comment on GitHub Issue
+        uses: peter-evans/create-or-update-comment@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: 1  # ✅ Daily Commit Tracker 이슈 번호로 수정!
+          body: |
+            🌞 Good morning 민아!
+
+            ${{ env.RECOMMENDED }}
