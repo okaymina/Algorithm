@@ -54,3 +54,8 @@ def recommend_unsolved_problem():
 # 테스트 실행
 if __name__ == "__main__":
     print(recommend_unsolved_problem())
+
+# log
+print(f"🔍 총 문제 수: {len(all_problems)}")
+print(f"✅ 푼 문제 수: {len(solved)}")
+print(f"❓ 추천 가능한 미풀이 수: {len(unsolved)}")
