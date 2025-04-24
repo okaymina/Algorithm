@@ -2,7 +2,7 @@ name: Daily Problem Recommender
 
 on:
   schedule:
-    - cron: '5 0 * * *' # 한국시간 09:05
+    - cron: '5 0 * * *'  # 한국시간 09:05 AM
   workflow_dispatch:
 
 jobs:
@@ -21,17 +21,20 @@ jobs:
       - name: Install dependencies
         run: pip install beautifulsoup4 requests
 
-      - name: Run recommender script
-        id: run_recommender
+      - name: Run recommender
+        id: recommend
         run: |
-          echo "RECOMMENDED=$(python problem_recommender.py)" >> $GITHUB_ENV
+          echo "COMMENT<<EOF" >> $GITHUB_ENV
+          python problem_recommender.py >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
 
       - name: Comment on GitHub Issue
         uses: peter-evans/create-or-update-comment@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          issue-number: 1  # ✅ Daily Commit Tracker 이슈 번호로 수정!
+          issue-number: 1  # 민아가 만든 'Daily Commit Tracker' 이슈 번호
           body: |
-            🌞 Good morning 민아!
+            🌞 Good morning 민아!  
+            데비티가 가져온 오늘의 추천 문제야 👇
 
-            ${{ env.RECOMMENDED }}
+            ${{ env.COMMENT }}
