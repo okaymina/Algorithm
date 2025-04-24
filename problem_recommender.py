@@ -27,9 +27,11 @@ def get_programmers_lv0_problems():
     soup = BeautifulSoup(response.text, "html.parser")
     problems = []
 
-    cards = soup.select(".challenge-card")
+    # ✅ 최신 구조 기준 selector
+    cards = soup.select("a.css-1x8dm0t")
+
     for card in cards:
-        title_tag = card.select_one(".challenge-card__title")
+        title_tag = card.select_one("div.css-1j9dxys")
         if not title_tag:
             continue
         title = title_tag.get_text(strip=True)
