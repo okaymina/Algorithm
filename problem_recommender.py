@@ -33,4 +33,24 @@ def get_programmers_lv0_problems():
         if not title_tag:
             continue
         title = title_tag.get_text(strip=True)
-        link = "https://school.programmers.co
+        link = "https://school.programmers.co.kr" + card.get("href")
+        problems.append({"title": title, "url": link})
+
+    return problems
+
+# 추천 로직
+def recommend_unsolved_problem():
+    all_problems = get_programmers_lv0_problems()
+    solved = [normalize(title) for title in get_solved_problems()]
+
+    unsolved = [p for p in all_problems if normalize(p['title']) not in solved]
+
+    if not unsolved:
+        return "모든 문제를 다 푼 것 같아요! 🎉"
+
+    pick = random.choice(unsolved)
+    return f"오늘의 추천 문제 👉 [{pick['title']}]({pick['url']})"
+
+# 테스트 실행
+if __name__ == "__main__":
+    print(recommend_unsolved_problem())
